@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Mail-Ersteller mit LLM (OpenAI)</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/email_generator">E-Mail-Ersteller</a></li>
+        </ul>
+    </nav>
+
+    <h1>E-Mail-Ersteller mit OpenAI</h1>
+    <form id="emailForm">
+        <label for="email_input">Eingehende E-Mail:</label>
+        <textarea id="email_input" name="email_input" required></textarea><br>
+
+        <label for="bullet_points">Stichpunkte:</label>
+        <input type="text" id="bullet_points" name="bullet_points" required><br>
+
+        <button type="submit">Erstell mir das</button>
+    </form>
+    <div id="generated_response"></div>
+
+    <script>
+        document.getElementById('emailForm').onsubmit = async function (event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            let response = await fetch('/email_generator', {
+                method: 'POST',
+                body: formData
+            });
+            let result = await response.json();
+            document.getElementById('generated_response').innerHTML = result.response;
+        };
+    </script>
+</body>
+</html>
