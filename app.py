@@ -1,10 +1,16 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 import openai
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
+
+api_key = os.getenv("API_KEY")
+
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-openai.api_key = "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"
+openai.api_key = api_key
 
 @app.route('/')
 def index():
